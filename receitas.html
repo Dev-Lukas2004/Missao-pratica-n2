@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo de Receitas</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">    
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</head>
+<script>
+    const preencheCatalogo = () => { };
+</script>
+<body style="padding: 10px" onload="preencheCatalogo();">
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand" class="nav-link active" href="receitas.html">Receitas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="ordenando.html">Ordenados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="usuarios.html">Usuários</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h1>Catálago de Receitas</h1>
+    <main class=" container-fluid bg-warning h-100 p-4">
+        <div class="card-deck" id="pnlCatalogo"></div>
+    </main>
+
+    <script>
+        const getListaIngredientes = (ingredientes) => {
+            let ingredientes_li = ingredientes.reduce(function (previousValue, currentValue, index) {
+                if (index == 1) {
+                    previousValue = `<li>${previousValue}</li>`;
+                };
+                return previousValue + `<li>${currentValue}</li>`;
+            });
+
+            return `<ul>${ingredientes_li}</ul>`;
+        };
+
+        const getListaPreparos = (preparos) => {
+            let preparos_li = preparos.reduce(function (previousValue, currentValue, index) {
+                if (index == 1) {
+                    previousValue = `<li>${previousValue}</li>`;
+                };
+                return previousValue + `<li>${currentValue}</li>`;
+            });
+
+            return `<ol>${preparos_li}</ol>`;
+        };
+
+        const getCard = (receita) => {
+            const painel_catalogo = document.getElementById("pnlCatalogo");
+            painel_catalogo.innerHTML = "";
+
+            let receitas_card = receita.map((item) => {
+                let ingredientes_ul = getListaIngredientes(item.ingredientes);
+                let preparos_ul = getListaPreparos(item.preparo);
+
+                card_html = "";
+                card_html += `<div class="card" style="width: 250px;">`;
+                card_html += `<img class="card-img-top" src="${item.imagem}" alt="${item.título}">`;
+                card_html += `<div class="card-body">`;
+                card_html += `<h3 class="card-title">${item.título}</h3>`;
+                card_html += `<div class="card-text"><small class="text-muted">${item.tempo}</small></div>`;
+                card_html += `<h5 class="card-title">ingredientes</h5>`;
+                card_html += `<p class="card-text">`;
+                card_html += ingredientes_ul;
+                card_html += `<hr>`;
+                card_html += `<h5 class="card-title">preparo</h5>`;
+                card_html += preparos_ul;
+                card_html += `</p>`;
+                card_html += `</div>`;
+                card_html += `</div>`;
+                painel_catalogo.innerHTML = painel_catalogo.innerHTML + card_html;
+            });
+        };
+
+        const vetor_de_receitas = [
+        {
+            "título": "Bolo de Chocolate",
+            "tempo": "50 min",
+            "imagem": "assets/imagem1.jpg",
+            "preparo": [
+                "Preaqueça o forno a 180°C. Unte e enfarinhe uma forma de bolo.",
+                "Em uma tigela grande, misture farinha, açúcar, cacau, fermento, bicarbonato e sal.",
+                "Adicione ovos, leite, óleo e baunilha. Misture bem.",
+                "Acrescente a água fervente e mexa até obter uma massa homogênea.",
+                "Despeje a massa na forma preparada e asse por 30-35 minutos, ou até que o palito saia limpo.",
+                "Deixe esfriar antes de decorar e servir."
+            ],
+            "ingredientes": [
+                "2 xícaras de farinha de trigo",
+                "1 3/4 xícaras de açúcar",
+                "3/4 xícara de cacau em pó",
+                "1 1/2 colher de chá de fermento em pó",
+                "1 1/2 colher de chá de bicarbonato de sódio",
+                "1 colher de chá de sal",
+                "2 ovos",
+                "1 xícara de leite",
+                "1/2 xícara de óleo vegetal",
+                "2 colheres de chá de extrato de baunilha",
+                "1 xícara de água fervente"
+            ],
+        },
+        {
+            "título": "Strogonoff",
+            "tempo": "30 min",
+            "imagem": "assets/imagem2.jpg",
+            "preparo": [
+                "Em uma frigideira, aqueça a manteiga e o óleo. Refogue a cebola e o alho até dourarem.",
+                "Adicione a carne ou frango e cozinhe até dourar.",
+                "Acrescente os cogumelos e continue cozinhando por mais alguns minutos.",
+                "Polvilhe a farinha e mexa bem.",
+                "Despeje o caldo de galinha, mostarda e ketchup. Cozinhe até engrossar.",
+                "Reduza o fogo, adicione o creme de leite e mexa até ficar bem aquecido.",
+                "Tempere com sal e pimenta a gosto. Sirva quente."
+            ],
+            "ingredientes": [
+                "500g de filé de frango ou carne de sua escolha, cortado em tiras",
+                "1 cebola média, picada",
+                "2 dentes de alho, picados",
+                "200g de cogumelos, fatiados",
+                "1 colher de sopa de manteiga",
+                "1 colher de sopa de óleo",
+                "1 colher de sopa de farinha de trigo",
+                "1 xícara de caldo de galinha",
+                "1 colher de sopa de mostarda",
+                "2 colheres de sopa de ketchup",
+                "1/2 xícara de creme de leite",
+                "Sal e pimenta a gosto"
+            ],
+        },
+        {
+            "título": "Macarronese",
+            "tempo": "20 min",
+            "imagem": "assets/imagem3.jpg",
+            "preparo": [
+                "Cozinhe o macarrão conforme as instruções da embalagem. Escorra e reserve.",
+                "Em uma tigela grande, misture o macarrão cozido, a maionese, os legumes picados e os temperos a gosto.",
+                "Leve à geladeira por pelo menos 1 hora antes de servir. Sirva gelado e aproveite!"
+            ],
+            "ingredientes": [
+                "500g de macarrão de sua escolha",
+                "1 xícara de maionese",
+                "1 cenoura grande, ralada",
+                "1 pepino médio, picado",
+                "1/2 xícara de milho verde",
+                "1/2 xícara de ervilhas",
+                "Sal e pimenta a gosto",
+                "Salsinha fresca para decorar"
+            ],
+        },
+    ];
+        getCard(vetor_de_receitas);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
